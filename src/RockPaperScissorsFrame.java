@@ -23,19 +23,17 @@ public class RockPaperScissorsFrame extends JFrame
     JLabel playerLoses;
     JLabel ties;
 
-    JTextArea results;
+    JTextArea pastGames;
 
     ImageIcon titleIcon;
-    ImageIcon rockIcon;
-    ImageIcon paperIcon;
-    ImageIcon scissorsIcon;
-    ImageIcon exitIcon;
 
     JScrollPane scroll;
 
     private int playerWinsCount = 0;
     private int playerLosesCount = 0;
     private int tiesCount = 0;
+
+    final String[] playerChoice = new String[1];
 
     public RockPaperScissorsFrame()
     {
@@ -87,23 +85,24 @@ public class RockPaperScissorsFrame extends JFrame
         middlePanel = new JPanel();
         middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS));
 
-        results = new JTextArea(5, 10);
-        results.setFont(displayFont);
-        display = new JLabel("Results");
+        display = new JLabel("Past Games");
         display.setFont(new Font("Arial", Font.BOLD, 20));
         display.setHorizontalAlignment(SwingConstants.CENTER);
         display.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        results.setLineWrap(true);
-        results.setWrapStyleWord(true);
-        results.setEditable(false);
+        pastGames = new JTextArea(5, 10);
+        pastGames.setFont(displayFont);
+        pastGames.setLineWrap(true);
+        pastGames.setWrapStyleWord(true);
+        pastGames.setEditable(false);
+
+        scroll = new JScrollPane(pastGames, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         playerWins = new JLabel("Player Wins: " + playerWinsCount);
         playerWins.setFont(displayFont);
         playerWins.setFont(recordFont);
         playerWins.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerWins.setHorizontalAlignment(SwingConstants.CENTER);
-
 
         playerLoses = new JLabel("Player Losses: " + playerLosesCount);
         playerLoses.setFont(displayFont);
@@ -117,8 +116,15 @@ public class RockPaperScissorsFrame extends JFrame
         ties.setHorizontalAlignment(SwingConstants.CENTER);
         ties.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+
+        // add components to middlePanel
+        /*
+        If a text area is added to a panel as well as a scroll pane, the text area will be displayed
+        and you don't need to add the text area to the scroll pane. The scroll pane will automatically
+        display the text area.
+         */
         middlePanel.add(display);
-        middlePanel.add(results);
+        middlePanel.add(scroll);
         middlePanel.add(playerWins);
         middlePanel.add(playerLoses);
         middlePanel.add(ties);
@@ -162,27 +168,33 @@ public class RockPaperScissorsFrame extends JFrame
         bottomPanel.add(scissors);
         bottomPanel.add(exit);
 
-        rock.addActionListener(e -> results.setText(getResults()));
-        paper.addActionListener(e -> results.setText(getResults()));
-        scissors.addActionListener(e -> results.setText(getResults()));
+
+        rock.addActionListener(e -> {
+            getResults("Rock");
+            playerWins.setText("Player Wins: " + playerWinsCount);
+            playerLoses.setText("Player Losses: " + playerLosesCount);
+            ties.setText("Ties: " + tiesCount);
+        });
+        paper.addActionListener(e -> {
+            getResults("Paper");
+            playerWins.setText("Player Wins: " + playerWinsCount);
+            playerLoses.setText("Player Losses: " + playerLosesCount);
+            ties.setText("Ties: " + tiesCount);
+        });
+        scissors.addActionListener(e -> {
+            getResults("Scissors");
+            playerWins.setText("Player Wins: " + playerWinsCount);
+            playerLoses.setText("Player Losses: " + playerLosesCount);
+            ties.setText("Ties: " + tiesCount);
+        });
         exit.addActionListener(e -> System.exit(0));
     }
 
-    private String getPlayerChoice()
-    {
-        final String[] playerChoice = new String[1];
-        rock.addActionListener(e -> results.setText("Rock"));
-        paper.addActionListener(e -> results.setText("Paper"));
-        scissors.addActionListener(e -> results.setText("Scissors"));
 
-        return playerChoice[0];
-    }
-
-    private String getResults()
+    private void getResults(String playerChoice)
     {
         String[] computerChoices = {"Rock", "Paper", "Scissors"};
         String computerChoice = computerChoices[(int) (Math.random() * 3)];
-        String playerChoice = getPlayerChoice();
         String result = "Invalid choice";
 
         if (playerChoice.equals(computerChoice))
@@ -220,6 +232,6 @@ public class RockPaperScissorsFrame extends JFrame
             result = "Rock crushes scissors. Computer wins";
             playerLosesCount++;
         }
-        return result;
+        pastGames.append(result + "\n");
     }
 }
