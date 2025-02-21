@@ -15,7 +15,6 @@ public class RockPaperScissorsFrame extends JFrame
     JButton exit;
 
     Font titleFont = new Font("Arial", Font.BOLD, 20);
-    Font buttonFont = new Font("Courier New", Font.ITALIC, 15);
     Font displayFont = new Font("Times New Roman", Font.PLAIN, 15);
 
     JLabel title;
@@ -26,9 +25,11 @@ public class RockPaperScissorsFrame extends JFrame
 
     JTextArea results;
 
+    ImageIcon titleIcon;
     ImageIcon rockIcon;
     ImageIcon paperIcon;
     ImageIcon scissorsIcon;
+    ImageIcon exitIcon;
 
     JScrollPane scroll;
 
@@ -68,17 +69,86 @@ public class RockPaperScissorsFrame extends JFrame
 
     private void createTopPanel()
     {
+        topPanel = new JPanel();
+        topPanel.setLayout(new GridLayout(1, 1));
 
+        titleIcon = new ImageIcon("duel.png");
+        title = new JLabel("Care for a duel in Rock, Paper, Scissors?");
+
+        title.setFont(titleFont);
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+
+        topPanel.add(title);
+        topPanel.add(new JLabel(titleIcon));
     }
 
     private void createMiddlePanel()
     {
-        
+        middlePanel = new JPanel();
+        middlePanel.setLayout(new GridLayout(4, 1));
+
+        display = new JLabel("Results");
+        display.setFont(displayFont);
+        display.setHorizontalAlignment(SwingConstants.CENTER);
+
+        results = new JTextArea();
+        results.setFont(displayFont);
+        results.setLineWrap(true);
+        results.setWrapStyleWord(true);
+        results.setEditable(false);
+
+        playerWins = new JLabel("Player Wins: " + playerWinsCount);
+        playerWins.setFont(displayFont);
+        playerWins.setHorizontalAlignment(SwingConstants.CENTER);
+
+        computerWins = new JLabel("Player Losses: " + playerLosesCount);
+        computerWins.setFont(displayFont);
+        computerWins.setHorizontalAlignment(SwingConstants.CENTER);
+
+        ties = new JLabel("Ties: " + tiesCount);
+        ties.setFont(displayFont);
+        ties.setHorizontalAlignment(SwingConstants.CENTER);
+
+        middlePanel.add(title);
+        middlePanel.add(display);
+        middlePanel.add(results);
+        middlePanel.add(playerWins);
+        middlePanel.add(computerWins);
+        middlePanel.add(ties);
     }
 
     private void createBottomPanel()
     {
-        
+        bottomPanel = new JPanel();
+
+        rock = new JButton("Rock");
+        paper = new JButton("Paper");
+        scissors = new JButton("Scissors");
+        exit = new JButton("Exit");
+
+        rockIcon = new ImageIcon("rock.png");
+        paperIcon = new ImageIcon("paper.png");
+        scissorsIcon = new ImageIcon("scissors.png");
+        exitIcon = new ImageIcon("exit.png");
+
+        rock.setIcon(rockIcon);
+        rock.setPreferredSize(new Dimension(100, 100));
+        paper.setIcon(paperIcon);
+        paper.setPreferredSize(new Dimension(100, 100));
+        scissors.setIcon(scissorsIcon);
+        scissors.setPreferredSize(new Dimension(100, 100));
+        exit.setIcon(exitIcon);
+        exit.setPreferredSize(new Dimension(100, 100));
+
+        bottomPanel.add(rock);
+        bottomPanel.add(paper);
+        bottomPanel.add(scissors);
+        bottomPanel.add(exit);
+
+        rock.addActionListener(e -> results.setText(getResults()));
+        paper.addActionListener(e -> results.setText(getResults()));
+        scissors.addActionListener(e -> results.setText(getResults()));
+        exit.addActionListener(e -> System.exit(0));
     }
 
     private String getPlayerChoice()
@@ -89,7 +159,6 @@ public class RockPaperScissorsFrame extends JFrame
         scissors.addActionListener(e -> results.setText("Scissors"));
 
         return playerChoice[0];
-
     }
 
     private String getResults()
