@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.Arrays;
 
 public class RockPaperScissorsFrame extends JFrame
 {
@@ -16,11 +15,12 @@ public class RockPaperScissorsFrame extends JFrame
 
     Font titleFont = new Font("Arial", Font.BOLD, 20);
     Font displayFont = new Font("Times New Roman", Font.PLAIN, 15);
+    Font recordFont = new Font("Courier New", Font.ITALIC, 20);
 
     JLabel title;
     JLabel display;
     JLabel playerWins;
-    JLabel computerWins;
+    JLabel playerLoses;
     JLabel ties;
 
     JTextArea results;
@@ -59,7 +59,7 @@ public class RockPaperScissorsFrame extends JFrame
         int screenWidth = screenSize.width;
 
         // center frame in screen
-        setSize(screenWidth / 3, screenHeight / 2);
+        setSize(screenWidth / 2, screenHeight / 2);
         setLocation(screenWidth / 3, screenHeight / 3);
 
         // sets the frame to be visible and adds the mainPanel to the frame
@@ -69,14 +69,14 @@ public class RockPaperScissorsFrame extends JFrame
 
     private void createTopPanel()
     {
-        topPanel = new JPanel();
-        topPanel.setLayout(new GridLayout(1, 1));
+        topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        titleIcon = new ImageIcon("duel.png");
-        title = new JLabel("Care for a duel in Rock, Paper, Scissors?");
-
+        title = new JLabel("Care for a duel of Rock, Paper, Scissors?");
         title.setFont(titleFont);
         title.setHorizontalAlignment(SwingConstants.CENTER);
+
+        titleIcon = new ImageIcon("duel.jpg");
+        titleIcon.setImage(titleIcon.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT));
 
         topPanel.add(title);
         topPanel.add(new JLabel(titleIcon));
@@ -85,35 +85,42 @@ public class RockPaperScissorsFrame extends JFrame
     private void createMiddlePanel()
     {
         middlePanel = new JPanel();
-        middlePanel.setLayout(new GridLayout(4, 1));
+        middlePanel.setLayout(new BoxLayout(middlePanel, BoxLayout.Y_AXIS));
 
-        display = new JLabel("Results");
-        display.setFont(displayFont);
-        display.setHorizontalAlignment(SwingConstants.CENTER);
-
-        results = new JTextArea();
+        results = new JTextArea(5, 10);
         results.setFont(displayFont);
+        display = new JLabel("Results");
+        display.setFont(new Font("Arial", Font.BOLD, 20));
+        display.setHorizontalAlignment(SwingConstants.CENTER);
+        display.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         results.setLineWrap(true);
         results.setWrapStyleWord(true);
         results.setEditable(false);
 
         playerWins = new JLabel("Player Wins: " + playerWinsCount);
         playerWins.setFont(displayFont);
+        playerWins.setFont(recordFont);
+        playerWins.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerWins.setHorizontalAlignment(SwingConstants.CENTER);
 
-        computerWins = new JLabel("Player Losses: " + playerLosesCount);
-        computerWins.setFont(displayFont);
-        computerWins.setHorizontalAlignment(SwingConstants.CENTER);
+
+        playerLoses = new JLabel("Player Losses: " + playerLosesCount);
+        playerLoses.setFont(displayFont);
+        playerLoses.setFont(recordFont);
+        playerLoses.setHorizontalAlignment(SwingConstants.CENTER);
+        playerLoses.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         ties = new JLabel("Ties: " + tiesCount);
         ties.setFont(displayFont);
+        ties.setFont(recordFont);
         ties.setHorizontalAlignment(SwingConstants.CENTER);
+        ties.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        middlePanel.add(title);
         middlePanel.add(display);
         middlePanel.add(results);
         middlePanel.add(playerWins);
-        middlePanel.add(computerWins);
+        middlePanel.add(playerLoses);
         middlePanel.add(ties);
     }
 
@@ -126,18 +133,28 @@ public class RockPaperScissorsFrame extends JFrame
         scissors = new JButton("Scissors");
         exit = new JButton("Exit");
 
-        rockIcon = new ImageIcon("rock.png");
-        paperIcon = new ImageIcon("paper.png");
-        scissorsIcon = new ImageIcon("scissors.png");
-        exitIcon = new ImageIcon("exit.png");
-
-        rock.setIcon(rockIcon);
+        rock = new JButton(new ImageIcon("rock.jpg"));
+        rock.setContentAreaFilled(false);
+        rock.setBorderPainted(false);
+        rock.setFocusPainted(false);
         rock.setPreferredSize(new Dimension(100, 100));
-        paper.setIcon(paperIcon);
+
+        paper = new JButton(new ImageIcon("paper.jpg"));
+        paper.setContentAreaFilled(false);
+        paper.setBorderPainted(false);
+        paper.setFocusPainted(false);
         paper.setPreferredSize(new Dimension(100, 100));
-        scissors.setIcon(scissorsIcon);
+
+        scissors = new JButton(new ImageIcon("scissors.jpg"));
+        scissors.setContentAreaFilled(false);
+        scissors.setBorderPainted(false);
+        scissors.setFocusPainted(false);
         scissors.setPreferredSize(new Dimension(100, 100));
-        exit.setIcon(exitIcon);
+
+        exit = new JButton(new ImageIcon("exit.png"));
+        exit.setContentAreaFilled(false);
+        exit.setBorderPainted(false);
+        exit.setFocusPainted(false);
         exit.setPreferredSize(new Dimension(100, 100));
 
         bottomPanel.add(rock);
