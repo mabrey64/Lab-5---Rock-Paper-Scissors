@@ -121,12 +121,14 @@ public class RockPaperScissorsFrame extends JFrame
         playerWins.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerWins.setHorizontalAlignment(SwingConstants.CENTER);
 
+        // These are the labels that will display the player wins, player losses, and ties. They are initialized to 0.
         playerLoses = new JLabel("Player Losses: " + playerLosesCount);
         playerLoses.setFont(displayFont);
         playerLoses.setFont(recordFont);
         playerLoses.setHorizontalAlignment(SwingConstants.CENTER);
         playerLoses.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // These are the labels that will display the player wins, player losses, and ties. They are initialized to 0.
         ties = new JLabel("Ties: " + tiesCount);
         ties.setFont(displayFont);
         ties.setFont(recordFont);
@@ -166,6 +168,7 @@ public class RockPaperScissorsFrame extends JFrame
         rock.setFocusPainted(false);
         rock.setPreferredSize(new Dimension(100, 100));
 
+        // The buttons are added to the bottom panel here, and they are initialized to the images of rock, paper, scissors, and exit.
         paper = new JButton(new ImageIcon("paper.jpg"));
         paper.setContentAreaFilled(false);
         paper.setBorderPainted(false);
@@ -184,6 +187,7 @@ public class RockPaperScissorsFrame extends JFrame
         exit.setFocusPainted(false);
         exit.setPreferredSize(new Dimension(100, 100));
 
+        // The buttons are added to the bottom panel here.
         bottomPanel.add(rock);
         bottomPanel.add(paper);
         bottomPanel.add(scissors);
